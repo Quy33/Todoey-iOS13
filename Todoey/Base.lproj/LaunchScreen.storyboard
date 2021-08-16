@@ -1,8 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -11,15 +14,69 @@
             <objects>
                 <viewController id="01J-lp-oVM" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V5n-uh-AJl" userLabel="Blue">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="564"/>
+                                <color key="backgroundColor" red="0.2274509804" green="0.3921568627" blue="0.83137254900000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m9x-Ej-0j3" userLabel="LightBlue">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="463"/>
+                                <color key="backgroundColor" red="0.4392156862745098" green="0.64201045040000004" blue="0.94514018300000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GC4-qy-Yxl" userLabel="Gray">
+                                <rect key="frame" x="0.0" y="564" width="414" height="332"/>
+                                <color key="backgroundColor" red="0.67843137249999996" green="0.67843137249999996" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shadow" translatesAutoresizingMaskIntoConstraints="NO" id="Dun-Fh-mQ3">
+                                <rect key="frame" x="82" y="587.5" width="250" height="81"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="250" id="MYR-wG-4cb"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pineApple" translatesAutoresizingMaskIntoConstraints="NO" id="UzQ-XN-4AP">
+                                <rect key="frame" x="7" y="258" width="400" height="380"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="400" id="ca9-r4-Xpg"/>
+                                    <constraint firstAttribute="height" constant="380" id="ptI-38-27F"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="tintColor" red="0.67843137254901964" green="0.67843137254901964" blue="0.67843137254901964" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="V5n-uh-AJl" secondAttribute="trailing" id="1eS-oL-ujQ"/>
+                            <constraint firstAttribute="trailing" secondItem="m9x-Ej-0j3" secondAttribute="trailing" id="AGI-Ao-gmz"/>
+                            <constraint firstItem="m9x-Ej-0j3" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="E41-aD-koY"/>
+                            <constraint firstAttribute="trailing" secondItem="GC4-qy-Yxl" secondAttribute="trailing" id="HTm-ZI-mtu"/>
+                            <constraint firstItem="GC4-qy-Yxl" firstAttribute="top" secondItem="V5n-uh-AJl" secondAttribute="bottom" id="Kd7-5G-phJ"/>
+                            <constraint firstItem="GC4-qy-Yxl" firstAttribute="top" secondItem="m9x-Ej-0j3" secondAttribute="bottom" constant="101" id="PtZ-uL-2N3"/>
+                            <constraint firstItem="UzQ-XN-4AP" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Sqc-S7-0pz"/>
+                            <constraint firstItem="Dun-Fh-mQ3" firstAttribute="top" secondItem="V5n-uh-AJl" secondAttribute="bottom" constant="23.5" id="Tdo-gb-vWd"/>
+                            <constraint firstItem="Dun-Fh-mQ3" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Xj9-m0-P5z"/>
+                            <constraint firstItem="UzQ-XN-4AP" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="eeG-Q3-L6a"/>
+                            <constraint firstItem="m9x-Ej-0j3" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="fZk-pQ-Syl"/>
+                            <constraint firstItem="GC4-qy-Yxl" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="hV5-M3-9s4"/>
+                            <constraint firstItem="Dun-Fh-mQ3" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="180" id="hV5-gt-poq"/>
+                            <constraint firstAttribute="bottom" secondItem="GC4-qy-Yxl" secondAttribute="bottom" id="pUN-og-ELh"/>
+                            <constraint firstItem="V5n-uh-AJl" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="qj1-In-90z"/>
+                            <constraint firstItem="V5n-uh-AJl" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="v9L-E0-zf4"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52.173913043478265" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="pineApple" width="368" height="528"/>
+        <image name="shadow" width="331" height="81"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>
