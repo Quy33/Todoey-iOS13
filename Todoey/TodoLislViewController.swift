@@ -12,7 +12,7 @@ class TodoLislViewController: UITableViewController {
     
 
     
-    let itemArray = [
+    var itemArray = [
         "Find Milk",
         "Buy Milk",
         "Go back Home"]
@@ -22,6 +22,29 @@ class TodoLislViewController: UITableViewController {
         // Do any additional setup after loading the view.
     }
 
+    
+//MARK: - Add new Items
+    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        var textField = UITextField()
+        let alert = UIAlertController(title: "Add new Todoey Item", message: "", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
+            //What will happen when user presses
+            if textField.text!.isEmpty {
+                return
+            }else{
+                print(textField.text)
+                self.itemArray.append(textField.text!)
+                self.tableView.reloadData() 
+            }
+        }
+        alert.addAction(action)
+        alert.addTextField { (alertTFX) in
+            alertTFX.placeholder = "Create new item"
+            textField = alertTFX
+        }
+        present(alert, animated: true, completion: nil)
+        
+    }
     
 //MARK: - TableViewDataSourceMethod
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
