@@ -10,8 +10,7 @@ import UIKit
 
 class TodoLislViewController: UITableViewController {
     
-
-    
+    var defaultData = UserDefaults()
     var itemArray = [
         "Find Milk",
         "Buy Milk",
@@ -19,7 +18,10 @@ class TodoLislViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        if let items = defaultData.array(forKey: K.keyArr) as? [String] {
+            itemArray = items
+        }
     }
 
     
@@ -32,9 +34,9 @@ class TodoLislViewController: UITableViewController {
             if textField.text!.isEmpty {
                 return
             }else{
-                print(textField.text)
                 self.itemArray.append(textField.text!)
-                self.tableView.reloadData() 
+                self.defaultData.setValue(self.itemArray, forKey: K.keyArr)
+                self.tableView.reloadData()
             }
         }
         alert.addAction(action)
