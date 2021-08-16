@@ -32,5 +32,20 @@ class TodoLislViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return itemArray.count
     }
+    
+//MARK: - TableViewDelegateMethod
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let index = indexPath.row
+        let cell = tableView.cellForRow(at: indexPath)
+        let accessory: UITableViewCell.AccessoryType = .checkmark
+        
+        if cell?.accessoryType == accessory {
+            cell?.accessoryType = .none
+        }else{
+            print(itemArray[index])
+            cell?.accessoryType = .checkmark
+        }
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }
 
