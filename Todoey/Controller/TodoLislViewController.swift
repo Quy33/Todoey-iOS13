@@ -66,6 +66,8 @@ class TodoLislViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = itemArray[indexPath.row]
         item.done = !item.done
+//        context.delete(item)
+//        itemArray.remove(at: indexPath.row)
         saveData()
         tableView.deselectRow(at: indexPath, animated: true)
     }
