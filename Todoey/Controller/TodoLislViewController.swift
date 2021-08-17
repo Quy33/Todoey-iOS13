@@ -11,17 +11,24 @@ import UIKit
 class TodoLislViewController: UITableViewController {
     
     var defaultData = UserDefaults()
-    var itemArray = [
-        "Find Milk",
-        "Buy Milk",
-        "Go back Home"]
+    var itemArray = [Item]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let items = defaultData.array(forKey: K.keyArr) as? [String] {
-            itemArray = items
-        }
+        let newItem = Item()
+        newItem.Title = "Go Home"
+        itemArray.append(newItem)
+        
+        let newItem2 = Item()
+        newItem2.Title = "Buy eggs"
+        newItem2.Done =  true
+        itemArray.append(newItem2)
+        
+    
+//        if let items = defaultData.array(forKey: K.keyArr) as? [String] {
+//            itemArray = items
+//        }
     }
 
     
@@ -34,7 +41,9 @@ class TodoLislViewController: UITableViewController {
             if textField.text!.isEmpty {
                 return
             }else{
-                self.itemArray.append(textField.text!)
+                let newItem = Item()
+                newItem.Title = textField.text!
+                self.itemArray.append(newItem)
                 self.defaultData.setValue(self.itemArray, forKey: K.keyArr)
                 self.tableView.reloadData()
             }
@@ -51,7 +60,11 @@ class TodoLislViewController: UITableViewController {
 //MARK: - TableViewDataSourceMethod
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: K.cellID, for: indexPath)
-        cell.textLabel?.text = itemArray[indexPath.row]
+        let item = itemArray[indexPath.row]
+        
+        cell.accessoryType = item.Done ? .checkmark : .none
+        
+        cell.textLabel?.text = itemArray[indexPath.row].Title
         return cell
     }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -60,16 +73,9 @@ class TodoLislViewController: UITableViewController {
     
 //MARK: - TableViewDelegateMethod
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let index = indexPath.row
-        let cell = tableView.cellForRow(at: indexPath)
-        let accessory: UITableViewCell.AccessoryType = .checkmark
-        
-        if cell?.accessoryType == accessory {
-            cell?.accessoryType = .none
-        }else{
-            print(itemArray[index])
-            cell?.accessoryType = .checkmark
-        }
+        let item = itemArray[indexPath.row]
+        item.Done = !item.Done
+        tableView.reloadData()
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
