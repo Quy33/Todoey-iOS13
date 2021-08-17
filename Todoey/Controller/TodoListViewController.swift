@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class TodoLislViewController: UITableViewController {
+class TodoListViewController: UITableViewController {
     
 
     
@@ -19,7 +19,6 @@ class TodoLislViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         loadData()
     }
 
@@ -51,7 +50,7 @@ class TodoLislViewController: UITableViewController {
     
 //MARK: - TableViewDataSourceMethod
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: K.cellID, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: K.cellID2, for: indexPath)
         let item = itemArray[indexPath.row]
         
         cell.accessoryType = item.done ? .checkmark : .none
@@ -92,7 +91,7 @@ class TodoLislViewController: UITableViewController {
     }
 }
 //MARK: - UISearchBarDelegate
-extension TodoLislViewController: UISearchBarDelegate {
+extension TodoListViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         let request : NSFetchRequest<Item> = Item.fetchRequest()
         request.predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)

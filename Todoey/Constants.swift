@@ -6,9 +6,10 @@
 //  Copyright © 2021 App Brewery. All rights reserved.
 //
 
-import Foundation
+import UIKit
 struct K {
-    static let cellID = "ToDoItemCell"
-    static let keyArr = "Items.plist"
+    static let cellID2 = "ToDoItemCell"
+    static let cellID1 = "CategoryCell"
     static let DB = "DataModel"
+    static let itemSegue = "goToItems"
 }
