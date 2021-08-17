@@ -19,7 +19,7 @@ class TodoLislViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-      //  loadData()
+        loadData()
     }
 
     
@@ -71,7 +71,6 @@ class TodoLislViewController: UITableViewController {
     }
 //MARK: - Model Manipulation Method
     func saveData() {
-        let encoder = PropertyListEncoder()
         do{
             try context.save()
         }catch{
@@ -79,16 +78,14 @@ class TodoLislViewController: UITableViewController {
         }
         self.tableView.reloadData()
     }
-//    func loadData() {
-//        if let data = try? Data(contentsOf: dataFilePath!){
-//            let decoder = PropertyListDecoder()
-//            do{
-//                itemArray = try decoder.decode([Item].self, from: data)
-//            }catch{
-//                print("There was an error decoding: \(error)")
-//            }
-//        }
+    func loadData() {
+        let request : NSFetchRequest<Item> = Item.fetchRequest()
         
-   // }
+        do{
+           itemArray = try context.fetch(request)
+        }catch{
+            print("Cannot read error: \(error)")
+        }
+    }
 }
 
