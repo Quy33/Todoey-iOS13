@@ -102,5 +102,17 @@ extension TodoLislViewController: UISearchBarDelegate {
         request.sortDescriptors = [sortDescriptor]
         
         loadData(with: request)
+        DispatchQueue.main.async {
+            searchBar.resignFirstResponder()
+        }
     }
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text!.isEmpty {
+            loadData()
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
+        }
+    }
+
 }
