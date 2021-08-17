@@ -11,6 +11,7 @@ import CoreData
 
 class TodoLislViewController: UITableViewController {
     
+
     
     var itemArray = [Item]()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -80,14 +81,26 @@ class TodoLislViewController: UITableViewController {
         }
         self.tableView.reloadData()
     }
-    func loadData() {
-        let request : NSFetchRequest<Item> = Item.fetchRequest()
-        
+    ///Give loadData a default value
+    func loadData(with request : NSFetchRequest<Item> = Item.fetchRequest()) {
         do{
            itemArray = try context.fetch(request)
         }catch{
-            print("Cannot read error: \(error)")
+            print(error)
         }
+        tableView.reloadData()
     }
 }
-
+//MARK: - UISearchBarDelegate
+extension TodoLislViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        let request : NSFetchRequest<Item> = Item.fetchRequest()
+        request.predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
+        
+        let sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
+        
+        request.sortDescriptors = [sortDescriptor]
+        
+        loadData(with: request)
+    }
+}
