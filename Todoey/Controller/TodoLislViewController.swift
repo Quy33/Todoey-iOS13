@@ -7,19 +7,19 @@
 //
 
 import UIKit
+import CoreData
 
 class TodoLislViewController: UITableViewController {
     
     
     var itemArray = [Item]()
-    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        .first?.appendingPathComponent(K.keyArr)
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadData()
+      //  loadData()
     }
 
     
@@ -32,8 +32,9 @@ class TodoLislViewController: UITableViewController {
             if textField.text!.isEmpty {
                 return
             }else{
-                let newItem = Item()
-                newItem.Title = textField.text!
+                let newItem = Item(context: self.context)
+                newItem.title = textField.text!
+                newItem.done = false
                 self.itemArray.append(newItem)
                 self.saveData()
             }
@@ -52,9 +53,9 @@ class TodoLislViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: K.cellID, for: indexPath)
         let item = itemArray[indexPath.row]
         
-        cell.accessoryType = item.Done ? .checkmark : .none
+        cell.accessoryType = item.done ? .checkmark : .none
         
-        cell.textLabel?.text = itemArray[indexPath.row].Title
+        cell.textLabel?.text = itemArray[indexPath.row].title
         return cell
     }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -64,7 +65,7 @@ class TodoLislViewController: UITableViewController {
 //MARK: - TableViewDelegateMethod
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = itemArray[indexPath.row]
-        item.Done = !item.Done
+        item.done = !item.done
         saveData()
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -72,23 +73,22 @@ class TodoLislViewController: UITableViewController {
     func saveData() {
         let encoder = PropertyListEncoder()
         do{
-            let data = try encoder.encode(itemArray)
-            try data.write(to: dataFilePath!)
+            try context.save()
         }catch{
-            print("There was an error encoding: \(error)")
+           print("error saving :\(error)")
         }
         self.tableView.reloadData()
     }
-    func loadData() {
-        if let data = try? Data(contentsOf: dataFilePath!){
-            let decoder = PropertyListDecoder()
-            do{
-                itemArray = try decoder.decode([Item].self, from: data)
-            }catch{
-                print("There was an error decoding: \(error)")
-            }
-        }
+//    func loadData() {
+//        if let data = try? Data(contentsOf: dataFilePath!){
+//            let decoder = PropertyListDecoder()
+//            do{
+//                itemArray = try decoder.decode([Item].self, from: data)
+//            }catch{
+//                print("There was an error decoding: \(error)")
+//            }
+//        }
         
-    }
+   // }
 }
 
