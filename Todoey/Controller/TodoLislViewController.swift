@@ -19,17 +19,7 @@ class TodoLislViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        let newItem = Item()
-        newItem.Title = "Go Home"
-        itemArray.append(newItem)
-        
-        let newItem2 = Item()
-        newItem2.Title = "Buy eggs"
-        newItem2.Done =  true
-        itemArray.append(newItem2)
-        
-    
+        loadData()
     }
 
     
@@ -85,9 +75,20 @@ class TodoLislViewController: UITableViewController {
             let data = try encoder.encode(itemArray)
             try data.write(to: dataFilePath!)
         }catch{
-            print("There was an error: \(error)")
+            print("There was an error encoding: \(error)")
         }
         self.tableView.reloadData()
+    }
+    func loadData() {
+        if let data = try? Data(contentsOf: dataFilePath!){
+            let decoder = PropertyListDecoder()
+            do{
+                itemArray = try decoder.decode([Item].self, from: data)
+            }catch{
+                print("There was an error decoding: \(error)")
+            }
+        }
+        
     }
 }
 
