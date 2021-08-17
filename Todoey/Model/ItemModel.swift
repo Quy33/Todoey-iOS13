@@ -7,7 +7,7 @@
 //
 
 import Foundation
-class Item {
+class Item: Encodable {
     var Title = ""
     var Done = false
 }

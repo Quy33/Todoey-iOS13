@@ -10,11 +10,15 @@ import UIKit
 
 class TodoLislViewController: UITableViewController {
     
-    var defaultData = UserDefaults()
+    
     var itemArray = [Item]()
+    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        .first?.appendingPathComponent(K.keyArr)
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         let newItem = Item()
         newItem.Title = "Go Home"
@@ -26,9 +30,6 @@ class TodoLislViewController: UITableViewController {
         itemArray.append(newItem2)
         
     
-//        if let items = defaultData.array(forKey: K.keyArr) as? [String] {
-//            itemArray = items
-//        }
     }
 
     
@@ -44,8 +45,7 @@ class TodoLislViewController: UITableViewController {
                 let newItem = Item()
                 newItem.Title = textField.text!
                 self.itemArray.append(newItem)
-                self.defaultData.setValue(self.itemArray, forKey: K.keyArr)
-                self.tableView.reloadData()
+                self.saveData()
             }
         }
         alert.addAction(action)
@@ -75,8 +75,19 @@ class TodoLislViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = itemArray[indexPath.row]
         item.Done = !item.Done
-        tableView.reloadData()
+        saveData()
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+//MARK: - Model Manipulation Method
+    func saveData() {
+        let encoder = PropertyListEncoder()
+        do{
+            let data = try encoder.encode(itemArray)
+            try data.write(to: dataFilePath!)
+        }catch{
+            print("There was an error: \(error)")
+        }
+        self.tableView.reloadData()
     }
 }
 
