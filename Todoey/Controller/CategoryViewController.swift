@@ -53,6 +53,20 @@ class CategoryViewController: UITableViewController {
         cell.textLabel?.text = category.name
         return cell
     }
+
+    //MARK: - TableViewDelegate Methods
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: K.itemSegue, sender: self)
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationTBVC = segue.destination as! TodoListViewController
+        
+        if let index = tableView.indexPathForSelectedRow{
+            destinationTBVC.selectedCategory = categoryArray[index.row]
+        }
+        
+    }
+
     //MARK: - Data Manipulation Methods
     func saveData() {
         do{
@@ -70,7 +84,6 @@ class CategoryViewController: UITableViewController {
             print(error)
         }
         tableView.reloadData()
+
     }
-    //MARK: - TableViewDelegate Methods
-    
 }
