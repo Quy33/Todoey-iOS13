@@ -38,7 +38,6 @@ class TodoListViewController: UITableViewController {
                 return
             }else{
                 if let currentCategory = self.selectedCategory {
-                   
                     do {
                         try self.realm.write{
                             let newItem = Item()
@@ -80,12 +79,18 @@ class TodoListViewController: UITableViewController {
     
 //MARK: - TableViewDelegateMethod
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        if let item = todoItems?[indexPath.row]{
-//            item.done = !item.done
-//        }
-////        context.delete(item)
-////        itemArray.remove(at: indexPath.row)
-//        saveData()
+        
+        if let item = todoItems?[indexPath.row] {
+            do {
+                try realm.write{
+                    item.done = !item.done
+                }
+            } catch {
+                print("There was an error updating item: \(error)")
+            }
+        }
+        tableView.reloadData()
+        
         tableView.deselectRow(at: indexPath, animated: true)
     }
 //MARK: - Model Manipulation Method
