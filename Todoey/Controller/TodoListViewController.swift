@@ -19,9 +19,6 @@ class TodoListViewController: UITableViewController {
             loadData()
         }
     }
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -94,15 +91,6 @@ class TodoListViewController: UITableViewController {
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
-//MARK: - Model Manipulation Method
-//    func saveData() {
-//        do{
-//            try context.save()
-//        }catch{
-//           print("error saving :\(error)")
-//        }
-//        self.tableView.reloadData()
-//    }
     ///Give loadData a default value
     func loadData(){
         todoItems = selectedCategory?.items.sorted(byKeyPath: "title", ascending: true)
