@@ -16,7 +16,7 @@ class TodoListViewController: UITableViewController {
     var todoItems : Results<Item>?
     var selectedCategory : Category? {
         didSet{
-            loadData()
+            loadItems()
         }
     }
     override func viewDidLoad() {
@@ -92,7 +92,7 @@ class TodoListViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     ///Give loadData a default value
-    func loadData(){
+    func loadItems(){
         todoItems = selectedCategory?.items.sorted(byKeyPath: "title", ascending: true)
         tableView.reloadData()
     }
@@ -110,7 +110,7 @@ extension TodoListViewController: UISearchBarDelegate {
     }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchBar.text!.isEmpty {
-            loadData()
+            loadItems()
             DispatchQueue.main.async {
                 searchBar.resignFirstResponder()
             }
