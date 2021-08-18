@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 import RealmSwift
-
+import ChameleonFramework
 
 class CategoryViewController: SwipeTableViewController {
 
@@ -20,6 +20,8 @@ class CategoryViewController: SwipeTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        tableView.separatorStyle = .none
         loadCategory()
     }
     //MARK: - Add Category
@@ -32,6 +34,7 @@ class CategoryViewController: SwipeTableViewController {
             }else{
                 let newCategory = Category()
                 newCategory.name = textField.text!
+                newCategory.colorCategory = UIColor.randomFlat().hexValue()
                 self.save(category: newCategory)
             }
         }
@@ -49,6 +52,8 @@ class CategoryViewController: SwipeTableViewController {
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
+        let cellCL = categoryArray?[indexPath.row].colorCategory
+        cell.backgroundColor = UIColor(hexString: cellCL ?? "00C1D4")
         cell.textLabel?.text = categoryArray?[indexPath.row].name ?? "No category here"
         return cell
     }
@@ -58,10 +63,11 @@ class CategoryViewController: SwipeTableViewController {
         performSegue(withIdentifier: K.itemSegue, sender: self)
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destinationTBVC = segue.destination as! TodoListViewController
+        let destinationVC = segue.destination as! TodoListViewController
         
-        if let index = tableView.indexPathForSelectedRow{
-            destinationTBVC.selectedCategory = categoryArray?[index.row]
+        if let index = tableView.indexPathForSelectedRow {
+            let categoryCL = categoryArray?[index.row].colorCategory
+            destinationVC.selectedCategory = categoryArray?[index.row]
         }
         
     }
