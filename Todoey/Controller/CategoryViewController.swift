@@ -8,31 +8,33 @@
 
 import UIKit
 import CoreData
+import RealmSwift
 
 class CategoryViewController: UITableViewController {
 
-    var categoryArray = [Category1]()
+    let realm = try! Realm()
+    
+    var categoryArray = [Category]()
     let context = (UIApplication.shared.delegate as! AppDelegate)
         .persistentContainer.viewContext
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadData()
+//        loadData()
     }
     //MARK: - Add Category
     @IBAction func addCategoryPressed(_ sender: UIBarButtonItem) {
         var textField = UITextField()
         let alert = UIAlertController(title: "Add new Category", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "Add", style: .default) { (action) in
-            //What will happen when user presses
             if textField.text!.isEmpty {
                 return
             }else{
-                let newCategory = Category1(context: self.context)
+                let newCategory = Category()
                 newCategory.name = textField.text!
                 self.categoryArray.append(newCategory)
-                self.saveData()
+                self.save(category: newCategory)
             }
         }
         alert.addAction(action)
@@ -68,22 +70,24 @@ class CategoryViewController: UITableViewController {
     }
 
     //MARK: - Data Manipulation Methods
-    func saveData() {
+    func save(category: Category) {
         do{
-            try context.save()
+            try realm.write{
+                realm.add(category)
+            }
         }catch{
            print("error saving :\(error)")
         }
         self.tableView.reloadData()
     }
     ///Give loadData a default value
-    func loadData(with request : NSFetchRequest<Category1> = Category1.fetchRequest()) {
-        do{
-           categoryArray = try context.fetch(request)
-        }catch{
-            print(error)
-        }
-        tableView.reloadData()
+//    func loadData(with request : NSFetchRequest<Category1> = Category1.fetchRequest()) {
+//        do{
+//           categoryArray = try context.fetch(request)
+//        }catch{
+//            print(error)
+//        }
+//        tableView.reloadData()
 
-    }
+    //}
 }

@@ -12,4 +12,5 @@ struct K {
     static let cellID1 = "CategoryCell"
     static let DB = "DataModel"
     static let itemSegue = "goToItems"
+    static let relation = "items"
 }
