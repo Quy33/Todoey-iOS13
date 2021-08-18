@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import RealmSwift
 
-class TodoListViewController: UITableViewController {
+class TodoListViewController: SwipeTableViewController {
     
     let realm = try! Realm()
     var todoItems : Results<Item>?
@@ -61,7 +61,8 @@ class TodoListViewController: UITableViewController {
     
 //MARK: - TableViewDataSourceMethod
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: K.cellID2, for: indexPath)
+        
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
         if let item = todoItems?[indexPath.row] {
             cell.textLabel?.text = item.title
             cell.accessoryType = item.done ? .checkmark : .none
@@ -96,16 +97,32 @@ class TodoListViewController: UITableViewController {
         todoItems = selectedCategory?.items.sorted(byKeyPath: "title", ascending: true)
         tableView.reloadData()
     }
+    //MARK: - Delete Data by swipe
+    override func updateModel(at indexPath: IndexPath) {
+        if let safeItem = todoItems?[indexPath.row] {
+            do {
+                try realm.write{
+                    realm.delete(safeItem)
+                }
+            } catch {
+                print("error deleting: \(error)")
+            }
+        }
+    }
 }
 //MARK: - UISearchBarDelegate
 extension TodoListViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        todoItems = todoItems?
-            .filter("title CONTAINS[cd] %@", searchBar.text!)
-            .sorted(byKeyPath: "dateCreated" , ascending: true)
-        tableView.reloadData()
-        DispatchQueue.main.async {
-            searchBar.resignFirstResponder()
+        if searchBar.text!.isEmpty{
+            return
+        }else{
+            todoItems = todoItems?
+                .filter("title CONTAINS[cd] %@", searchBar.text!)
+                .sorted(byKeyPath: "dateCreated" , ascending: true)
+            tableView.reloadData()
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
         }
     }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

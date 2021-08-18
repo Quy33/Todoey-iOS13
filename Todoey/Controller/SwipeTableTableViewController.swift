@@ -9,27 +9,20 @@
 import UIKit
 import SwipeCellKit
 
-class SwipeTableTableViewController: UITableViewController, SwipeTableViewCellDelegate {
+class SwipeTableViewController: UITableViewController, SwipeTableViewCellDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
     }
-    
+    //MARK: - SwipeCellKit Delegate Methods
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
         guard orientation == .right else { return nil }
 
         let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
-            print("Delete Cell")
-//            if let categoryForDel = self.categoryArray?[indexPath.row] {
-//                do{
-//                    try self.realm.write{
-//                        self.realm.delete(categoryForDel)
-//                    }
-//                }catch{
-//                    print("error deleting category: \(error)")
-//                }
-//            }
+            
+            self.updateModel(at: indexPath)
+
         }
 
         // customize the action appearance
@@ -41,5 +34,18 @@ class SwipeTableTableViewController: UITableViewController, SwipeTableViewCellDe
         var options = SwipeOptions()
         options.expansionStyle = .destructive
         return options
+    }
+    
+    //MARK: - TablViewDataSource Methods
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: K.cellID, for: indexPath) as! SwipeTableViewCell
+        cell.delegate = self
+        tableView.rowHeight = 80.0
+        return cell
+    }
+    //MARK: - Update model
+    func updateModel(at indexPath: IndexPath) {
+        //Used to be override at CategoryVC, this is first used in editActionForRowAt that was inherited which get overried later at CategoryVC
+        print("Item called at super class")
     }
 }

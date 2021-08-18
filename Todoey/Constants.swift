@@ -8,8 +8,7 @@
 
 import UIKit
 struct K {
-    static let cellID2 = "ToDoItemCell"
-    static let cellID1 = "CategoryCell"
+    static let cellID = "Cell"
     static let DB = "DataModel"
     static let itemSegue = "goToItems"
     static let relation = "items"
