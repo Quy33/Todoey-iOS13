@@ -24,6 +24,14 @@ class CategoryViewController: SwipeTableViewController {
         tableView.separatorStyle = .none
         loadCategory()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        guard let navBar = navigationController?.navigationBar else {
+            fatalError("navigation controller does not exist.")
+        }
+        navBar.backgroundColor = UIColor(hexString: "00C1D4")
+    }
+    
     //MARK: - Add Category
     @IBAction func addCategoryPressed(_ sender: UIBarButtonItem) {
         var textField = UITextField()
@@ -52,9 +60,16 @@ class CategoryViewController: SwipeTableViewController {
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
-        let cellCL = categoryArray?[indexPath.row].colorCategory
-        cell.backgroundColor = UIColor(hexString: cellCL ?? "00C1D4")
-        cell.textLabel?.text = categoryArray?[indexPath.row].name ?? "No category here"
+        if let category = categoryArray?[indexPath.row] {
+            
+            guard let cellCL = UIColor(hexString: category.colorCategory) else {
+                fatalError()
+            }
+            
+            cell.backgroundColor = cellCL
+            cell.textLabel?.text = category.name
+            cell.textLabel?.textColor = ContrastColorOf(cellCL, returnFlat: true)
+        }
         return cell
     }
 

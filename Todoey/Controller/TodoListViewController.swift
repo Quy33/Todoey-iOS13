@@ -13,6 +13,7 @@ import ChameleonFramework
 
 class TodoListViewController: SwipeTableViewController {
     
+    @IBOutlet weak var searchBarOL: UISearchBar!
     let realm = try! Realm()
     var todoItems : Results<Item>?
     var selectedCategory : Category? {
@@ -25,7 +26,21 @@ class TodoListViewController: SwipeTableViewController {
         
         tableView.separatorStyle = .none
     }
-
+    override func viewWillAppear(_ animated: Bool) {
+        if let colorHex = selectedCategory?.colorCategory {
+            
+            guard let navBar = navigationController?.navigationBar else {
+                fatalError("navigation controller does not exist.")
+            }
+            title = selectedCategory!.name
+            if let navBarCL = UIColor(hexString: colorHex) {
+                navBar.backgroundColor = navBarCL
+                navBar.tintColor = ContrastColorOf(navBarCL, returnFlat: true)
+                navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : ContrastColorOf(navBarCL, returnFlat: true)]
+                searchBarOL.barTintColor = navBarCL
+            }
+        }
+    }
     
 //MARK: - Add new Items
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
