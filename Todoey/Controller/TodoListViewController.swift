@@ -165,5 +165,4 @@ extension TodoListViewController: UISearchBarDelegate {
     }
 
 }
-//MARK: - SearchBarConfig
 

@@ -11,9 +11,10 @@ import SwipeCellKit
 
 class SwipeTableViewController: UITableViewController, SwipeTableViewCellDelegate {
 
+    ///This class is used to be the superclass of category and todoList VC
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
     //MARK: - SwipeCellKit Delegate Methods
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
@@ -37,6 +38,7 @@ class SwipeTableViewController: UITableViewController, SwipeTableViewCellDelegat
     }
     
     //MARK: - TablViewDataSource Methods
+    ///This function is used to make a SwipeCellKit cell that can be inherited by Category and todoList
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: K.cellID, for: indexPath) as! SwipeTableViewCell
         cell.delegate = self

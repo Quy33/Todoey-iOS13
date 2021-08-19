@@ -98,6 +98,7 @@ class CategoryViewController: SwipeTableViewController {
         categoryArray = realm.objects(Category.self)
     }
     //MARK: - Delete Data From Swipe
+    ///This function is inherited from SwipeTableViewController which was inherited from UITableViewController
     override func updateModel(at indexPath: IndexPath) {
         
         super.updateModel(at: indexPath)
