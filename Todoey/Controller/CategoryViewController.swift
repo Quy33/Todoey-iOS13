@@ -20,7 +20,6 @@ class CategoryViewController: SwipeTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         tableView.separatorStyle = .none
         loadCategory()
     }
@@ -31,7 +30,6 @@ class CategoryViewController: SwipeTableViewController {
         }
         navBar.backgroundColor = UIColor(hexString: "00C1D4")
     }
-    
     //MARK: - Add Category
     @IBAction func addCategoryPressed(_ sender: UIBarButtonItem) {
         var textField = UITextField()
@@ -72,7 +70,6 @@ class CategoryViewController: SwipeTableViewController {
         }
         return cell
     }
-
     //MARK: - TableViewDelegate Methods
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: K.itemSegue, sender: self)
@@ -81,12 +78,10 @@ class CategoryViewController: SwipeTableViewController {
         let destinationVC = segue.destination as! TodoListViewController
         
         if let index = tableView.indexPathForSelectedRow {
-            let categoryCL = categoryArray?[index.row].colorCategory
             destinationVC.selectedCategory = categoryArray?[index.row]
         }
         
     }
-
     //MARK: - Data Manipulation Methods
     func save(category: Category) {
         do{

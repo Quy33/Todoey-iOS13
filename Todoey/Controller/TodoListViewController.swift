@@ -25,6 +25,7 @@ class TodoListViewController: SwipeTableViewController {
         super.viewDidLoad()
         
         tableView.separatorStyle = .none
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         if let colorHex = selectedCategory?.colorCategory {
@@ -33,11 +34,15 @@ class TodoListViewController: SwipeTableViewController {
                 fatalError("navigation controller does not exist.")
             }
             title = selectedCategory!.name
+            
             if let navBarCL = UIColor(hexString: colorHex) {
+                let contrastCl = ContrastColorOf(navBarCL, returnFlat: true)
                 navBar.backgroundColor = navBarCL
-                navBar.tintColor = ContrastColorOf(navBarCL, returnFlat: true)
-                navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : ContrastColorOf(navBarCL, returnFlat: true)]
+                navBar.tintColor = contrastCl
+                navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : contrastCl]
                 searchBarOL.barTintColor = navBarCL
+                searchBarOL.searchTextField.textColor = navBarCL
+                searchBarOL.searchTextField.backgroundColor = contrastCl
             }
         }
     }
@@ -57,7 +62,6 @@ class TodoListViewController: SwipeTableViewController {
                             let newItem = Item()
                             newItem.title = textField.text!
                             newItem.dateCreated = Date()
-                            newItem.colorItem = currentCategory.colorCategory
                             currentCategory.items.append(newItem)
                         }
                     } catch {
@@ -74,24 +78,27 @@ class TodoListViewController: SwipeTableViewController {
             textField = alertTFX
         }
         present(alert, animated: true, completion: nil)
-        
     }
     
 //MARK: - TableViewDataSourceMethod
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
+        
         if let item = todoItems?[indexPath.row] {
+            
             cell.textLabel?.text = item.title
             cell.accessoryType = item.done ? .checkmark : .none
             if let color = UIColor(hexString: selectedCategory!.colorCategory)?.darken(byPercentage: CGFloat(indexPath.row) / CGFloat(todoItems!.count)){
                 cell.backgroundColor = color
                 cell.textLabel?.textColor = ContrastColorOf(color, returnFlat: true)
             }
-        }else{
+            
+        } else {
+            
             cell.textLabel?.text = todoItems?[indexPath.row].title ?? "No Items added"
+            
         }
-        
         return cell
     }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -114,8 +121,9 @@ class TodoListViewController: SwipeTableViewController {
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
     ///Give loadData a default value
-    func loadItems(){
+    func loadItems() {
         todoItems = selectedCategory?.items.sorted(byKeyPath: "title", ascending: true)
         tableView.reloadData()
     }
@@ -137,7 +145,7 @@ extension TodoListViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if searchBar.text!.isEmpty{
             return
-        }else{
+        } else {
             todoItems = todoItems?
                 .filter("title CONTAINS[cd] %@", searchBar.text!)
                 .sorted(byKeyPath: "dateCreated" , ascending: true)
@@ -157,3 +165,5 @@ extension TodoListViewController: UISearchBarDelegate {
     }
 
 }
+//MARK: - SearchBarConfig
+

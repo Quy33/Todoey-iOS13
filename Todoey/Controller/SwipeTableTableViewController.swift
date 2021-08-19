@@ -46,6 +46,5 @@ class SwipeTableViewController: UITableViewController, SwipeTableViewCellDelegat
     //MARK: - Update model
     func updateModel(at indexPath: IndexPath) {
         //Used to be override at CategoryVC, this is first used in editActionForRowAt that was inherited which get overried later at CategoryVC
-        print("Item called at super class")
     }
 }
